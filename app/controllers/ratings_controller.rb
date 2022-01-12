@@ -2,6 +2,7 @@ class RatingsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_not_found_response
 
     def index 
+        byebug
         render json: Rating.all, status: :ok
     end
 

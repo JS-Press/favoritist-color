@@ -23,7 +23,7 @@ end
   private 
 
 def user_params 
-    params.permit( :username, :password_digest )
+    params.permit( :name, :password_digest )
 end
   
 def render_not_found_response 
