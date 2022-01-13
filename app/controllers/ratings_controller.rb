@@ -2,22 +2,25 @@ class RatingsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_not_found_response
 
     def index 
-        byebug
+        
         render json: Rating.all, status: :ok
     end
 
 
     def create 
         user = User.find_by(id: session[:user_id])  
+        # byebug
         if user
             new_rating = Rating.new( rate_params )
-            new_rating.user_id = user.id
+            color = Color.find(name: params[:color])
+            new_rating.color_id = color.id
             if new_rating.save
                 render json: new_ratings, status: :created
             else
                 render json: { errors: new_rating.errors.full_messages }, status: :unprocessable_entity
             end
         else 
+            puts "not in that session hash yo"
             render json: { errors: ["must login"] }, status: :unauthorized
         end
     end
@@ -62,7 +65,7 @@ class RatingsController < ApplicationController
     private 
 
     def rate_params
-        params.permit( :score, :color_id )
+        params.permit( :score, :user_id )
     end
 
     def render_not_found_response 

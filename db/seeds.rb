@@ -14,17 +14,20 @@ css_colors = ['AliceBlue', 'AntiqueWhite', 'Aqua', 'Aquamarine', 'Azure', 'Beige
 names = ["Vincent", "Pablo", "Paul", "Albrecht", "Andy", "Edgar", "Diego", "Edvard", "Claude", "Francis", "George", "Gustav", "Jackson", "Jasper", "Henri", "Rosa", "Mark", "Marcel", "Pierre", "Piet", "Ray", "Roy", "Salvador", "Wassily", "Barbara", "Diane", "Anne", "Dorothea", "Eva", "Frida", "Georgia", "Sally", "Jan", "Yayoi", "Jeanette"]
 
 css_colors.each do |n|
-    Color.create( name: n, rating_average: rand(1..5) )
+    Color.create( name: n )
 end
+
+
+# User.create(name:'test', color_id:2)
+# Rating.create(user_id:1, color_id:2, score: 5)
 
 
 rand(10..20).times do 
-    User.create( name: names.sample, color_id: rand(1..145) )
+    User.create( name: names.sample, color_id: rand(1..145), password_digest: names.sample )
 end
 
 User.all.each do |u|
-
-    rand(1..6).times do 
+    rand(5..100).times do 
         Rating.create( user_id: u.id, color_id: rand(1..145), score: rand(1..5) )
     end
 

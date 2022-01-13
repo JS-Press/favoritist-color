@@ -8,4 +8,4 @@ class ColorsController < ApplicationController
 end
 
 
-# include: :ratings
+#, include: :ratings
