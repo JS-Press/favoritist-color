@@ -37,6 +37,9 @@ function Login({ fav, onLogin }){
 
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
+    const [errors, setErrors] = useState([]);
+
+    const navigate = useNavigate()
 
     function handleChangeName(e){
     setName(e.target.value)
@@ -46,10 +49,22 @@ function Login({ fav, onLogin }){
     setPassword(e.target.value)
     }
 
-      function handleSubmit(e){
-        e.preventDefault()
+      function handleSubmit(){
         console.log('trying to log in ' + name)
-        onLogin({name: name, password_digest: password, color_id: 2 })
+
+        fetch("/login", {
+          method: "POST",
+          headers: {"Content-Type": "application/json",},
+          body: JSON.stringify({ name: name, password: password }),
+        }).then((r) => {
+          if (r.ok) {
+            r.json().then((user) => onLogin(user));
+            navigate('/')
+          } else {
+            r.json().then((err) => setErrors(err.errors));
+            console.log(errors)
+          }
+        });
         setName('')
         setPassword('')
       }
@@ -69,6 +84,7 @@ function Login({ fav, onLogin }){
         <br></br>
          <label style={labelStyle}>password</label>
          <br></br>
+         <h3 style={{color:'white' }}>{errors}</h3>
          <button style={loginStyle} onClick={handleSubmit} type="submit">login</button>
          <br></br>
          <br></br>

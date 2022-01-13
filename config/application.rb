@@ -8,6 +8,7 @@ require "active_record/railtie"
 # require "active_storage/engine"
 require "action_controller/railtie"
 # require "action_mailer/railtie"
+
 # require "action_mailbox/engine"
 # require "action_text/engine"
 require "action_view/railtie"
@@ -26,6 +27,10 @@ module FavColorApp
 
     # Configuration for the application, engines, and railties goes here.
     #
+    config.api_only = true
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.action_dispatch.cookies_same_site_protection = :strict
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
@@ -35,6 +40,6 @@ module FavColorApp
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
-    config.api_only = true
+    
   end
 end

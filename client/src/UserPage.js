@@ -1,14 +1,14 @@
 import React from 'react';
 
-function UserCard({username, ratings}){
+function UserPage(){
 
 
 
     return (
         <div>
-            
+            <h1>User Page!</h1>
         </div>
     );
 }
 
-export default UserCard;
+export default UserPage;

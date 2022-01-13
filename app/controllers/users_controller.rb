@@ -13,7 +13,6 @@ def create
       Rating.create(user_id: user.id, color_id: user.color_id, score: 6)
       render json: user, status: :created
       else
-        puts 'noooooo'
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
       end
 end

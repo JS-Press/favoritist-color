@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
-  get 'sessions/create'
-  get 'sessions/destroy'
+  get '/favorite', to: 'colors#favorite'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
   get '/colors', to: 'colors#index'
   post '/users', to: 'users#create'
+  get '/users/:id', to: 'users#show'
 
   resources :ratings
   resources :users, :only => [ :index, :post, :show ]

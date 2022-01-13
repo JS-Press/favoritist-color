@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from "react";
 import ColorCard from "./ColorCard"
-import {Link} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 function Signup({ fav, onLogin, colors, loadingColors, shuffle }){
   
@@ -9,7 +9,8 @@ function Signup({ fav, onLogin, colors, loadingColors, shuffle }){
   const [favColor, setFavColor] = useState('')
   const [favColorId, setFavColorId] = useState('')
   const [errors, setErrors] = useState([]);
-
+  
+ const navigate = useNavigate()
 
   const SignUpStyle = {
       backgroundColor: `${fav}`,
@@ -48,7 +49,7 @@ function Signup({ fav, onLogin, colors, loadingColors, shuffle }){
 
 
   const shuffled_colors = shuffle(colors)
-  const color_cards = shuffled_colors.map( c => <ColorCard name={c.name} key={c.id} avgRating={c.rating_average} rates='false' setFavColor={setFavColor} setFavColorId={setFavColorId} colorId={c.id}/> )
+  const color_cards = shuffled_colors.map( c => <ColorCard name={c.name} key={c.id} avgRating={c.rating_average} rates='false' setFavColor={setFavColor} setFavColorId={setFavColorId} colorId={c.id} ratings={c.ratings} /> )
 
 
       function handleChangeName(e){
@@ -70,7 +71,7 @@ function Signup({ fav, onLogin, colors, loadingColors, shuffle }){
           body: JSON.stringify({
             
             name: name,
-            password_digest: password,
+            password: password,
             color_id: favColorId,
           
           }),
@@ -80,6 +81,8 @@ function Signup({ fav, onLogin, colors, loadingColors, shuffle }){
             setName('')
             setPassword('')
             setFavColor('')
+            navigate('/')
+            
           } else {
             r.json().then((err) => setErrors(err.errors));
           }
@@ -93,12 +96,12 @@ function Signup({ fav, onLogin, colors, loadingColors, shuffle }){
         {/* <h3 style={{ color:`${fav}`, fontSize: 25 }}>set up your profile</h3> */}
         <hr style={{ width: 100, borderColor: `${fav}`}}></hr>
         <br></br>
-         <label style={labelStyle}>choose a username</label>
+          <label style={labelStyle}>choose a username</label>
         <br></br>
         <input style = {searchStyle} type='text' onChange={handleChangeName} value={name} />
-         <br></br>
-         <br></br>
-         <label style={labelStyle}>create a password</label>
+          <br></br>
+          <br></br>
+          <label style={labelStyle}>create a password</label>
         <br></br>
         <input style = {searchStyle} type='password' onChange={handleChangePassword} value={password} />
          <br></br>

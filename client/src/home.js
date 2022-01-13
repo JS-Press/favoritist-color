@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import crown from './crown.png'
 import ColorCard from "./ColorCard"
+import { useNavigate } from "react-router-dom";
 
-function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setRatingColor, user }){
+function Home({ setAverageScores, averageScores, fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setRatingColor, user }){
     
     const [searchField, setSearchField] = useState('')
     const [rColor, setRcolor] = useState("")
     const [numberRating, setNumberRating] = useState(null)
     const [errors, setErrors] = useState([]);
 
-    // colors.map(color => console.log(color.ratings))
 
     const shuffled_colors = shuffle(colors)
-
     const filteredColors = shuffled_colors.filter((c) => c.name.toUpperCase().includes(searchField.toUpperCase()))
-    const color_cards = filteredColors.map( c => <ColorCard name={c.name} ratings={c.ratings} key={c.name} setRatingColor={setRatingColor} setRcolor={setRcolor} loggedIn={loggedIn} colorId={c.id} rates='true' /> )
+    const color_cards = filteredColors.map( c => <ColorCard name={c.name} ratings={c.ratings} key={c.name} setRatingColor={setRatingColor} setRcolor={setRcolor} loggedIn={loggedIn} colorId={c.id} rates='true' setAverageScores={setAverageScores} averageScores={averageScores} /> )
 
+    const navigate = useNavigate()
 
   const searchStyle = {
       backgroundColor: 'black',
@@ -74,7 +74,6 @@ function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setR
     }
 
     function handleRateClick(e){
-    console.log(Number(e.target.value))
     setNumberRating(e.target.value)
     }
 
@@ -86,10 +85,13 @@ function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setR
           body: JSON.stringify({
             user_id: user.id,
             color: rColor,
+            score: numberRating
           }),
         }).then((r) => {
           if (r.ok) {
-            r.json().then((user) => setRatingColor(false));
+            r.json().then((user) => {
+              navigate('/')
+              setRatingColor(false)});
           } else {
             r.json().then((err) => setErrors(err.errors));
           }

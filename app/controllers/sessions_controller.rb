@@ -1,13 +1,15 @@
 class SessionsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :render_not_found_response
+  # rescue_from BCrypt::Errors::InvalidHash, with: :render_not_found_response
 
   def create
-    user = User.find_by(username: params[:username])
-    if user&.authenticate(params[:password])
+    user = User.find_by(name: params[:name])
+    # byebug
+    if user && user.password === params[:password]
       session[:user_id] = user.id
       render json: user, status: :ok
     else
-      errors = [" user does not exist "]
+      errors = [" invalid username or password "]
       render json: { errors: errors}, status: :unauthorized
     end
   end
@@ -25,7 +27,7 @@ class SessionsController < ApplicationController
   private 
 
 def render_not_found_response 
-  render json: { errors: 'not_found' }, status: :unauthorized
+  render json: { errors: 'user or password invalid' }, status: :unauthorized
 end
 
 end

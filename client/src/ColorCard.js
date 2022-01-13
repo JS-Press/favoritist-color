@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function ColorCard({name, setRatingColor, setRcolor, loggedIn, rates, setFavColor, setFavColorId, colorId, ratings}){
+function ColorCard({name, setRatingColor, setRcolor, loggedIn, rates, setFavColor, setFavColorId, colorId, ratings, setAverageScores, averageScores}){
 
     const [isShown, setIsShown] = useState(false);
 
@@ -13,7 +13,8 @@ function ColorCard({name, setRatingColor, setRcolor, loggedIn, rates, setFavColo
     }
     // console.log(name + ' score total:' + scoreTotal)
     let averageScore = Math.round(scoreTotal / scores.length)
-    console.log(name + ' average score:' + averageScore)
+    // setAverageScores([...averageScores, averageScore])
+    // console.log(name + ' average score:' + averageScore)
 
     const divStyle = {
         backgroundColor:`${name}`,

@@ -23,7 +23,7 @@ end
 
 
 rand(10..20).times do 
-    User.create( name: names.sample, color_id: rand(1..145), password_digest: names.sample )
+    User.create( name: names.sample, color_id: rand(1..145), password: names.sample )
 end
 
 User.all.each do |u|

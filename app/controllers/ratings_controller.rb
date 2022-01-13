@@ -9,13 +9,12 @@ class RatingsController < ApplicationController
 
     def create 
         user = User.find_by(id: session[:user_id])  
-        # byebug
         if user
             new_rating = Rating.new( rate_params )
-            color = Color.find(name: params[:color])
+            color = Color.find_by(name: params[:color])
             new_rating.color_id = color.id
             if new_rating.save
-                render json: new_ratings, status: :created
+                render json: new_rating, status: :created
             else
                 render json: { errors: new_rating.errors.full_messages }, status: :unprocessable_entity
             end
