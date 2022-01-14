@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import {Link, Redirect } from "react-router-dom"
+import {Link } from "react-router-dom"
 import Navbar from "./Navbar"
 import Home from "./Home"
 import Login from "./Login"
@@ -44,7 +44,8 @@ function App() {
     color: `${fav}`, 
     textDecoration: 'none',
     fontWeight: 'bold',
-    borderRadius: 50
+    borderRadius: 50,
+    padding: 2
   }
 
   const myColorsStyle = {
@@ -54,7 +55,8 @@ function App() {
     fontWeight: 'bold',
     borderRadius: 50,
     marginBottom:10,
-    marginTop:20
+    marginTop:20,
+    padding: 6
   }
 
 
@@ -93,8 +95,8 @@ function onLogin(u){
       {loggedIn && (
         <>
           <h1 style={{ fontSize: 20, marginBottom:0, color: `${fav}` }}>Hello {user.name} :)</h1>
-          <button style={logoutStyle} onClick={handleLogout} >logout</button>
-          <button style={myColorsStyle}>see my ratings</button>
+          <button style={logoutStyle} onClick={handleLogout} >  logout  </button>
+          <Link style={myColorsStyle} to={`/users/${user.id}`} >  see my ratings  </Link>
         </>
       )}
       {!loggedIn && (
@@ -110,7 +112,7 @@ function onLogin(u){
         <Route path="/" element={<Home setAverageScores={setAverageScores} averageScores={averageScores} fav={fav} loggedIn={loggedIn} colors={colors} loadingColors={loadingColors} shuffle={shuffle} ratingColor={ratingColor} setRatingColor={setRatingColor} user={user}/>}/>
         <Route path="/signup" element={<Signup fav={fav} onLogin={onLogin} colors={colors} loadingColors={loadingColors} shuffle={shuffle}/>}/>
         <Route path="/login" element={<Login fav={fav} onLogin={onLogin} />}/>
-        {/* <Route path="/users/:id" element={<UserPage userId={params[:id]} />}/> */}
+        <Route path="/users/:id" element={<UserPage u={user} fav={fav} />}/>
       </Routes>
     </div>
   </div>

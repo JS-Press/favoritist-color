@@ -18,7 +18,9 @@ def create
 end
 
 def show
-    render json: User.find(params[:id]), status: :ok
+  user = User.find(params[:id])
+  # byebug
+    render json: user, include: :ratings, status: :ok
 end
 
   private 

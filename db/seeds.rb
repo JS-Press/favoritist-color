@@ -18,10 +18,6 @@ css_colors.each do |n|
 end
 
 
-# User.create(name:'test', color_id:2)
-# Rating.create(user_id:1, color_id:2, score: 5)
-
-
 rand(10..20).times do 
     User.create( name: names.sample, color_id: rand(1..145), password: names.sample )
 end

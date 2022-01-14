@@ -4,6 +4,12 @@ class ColorsController < ApplicationController
         render json: colors, include: :ratings, status: :ok
     end
 
+    def show
+        color = Color.find(params[:id])
+        # byebug
+          render json: color, status: :ok
+      end
+
     def favorite
         colors = Color.all
         # colors.each { |c| puts c.ratings}

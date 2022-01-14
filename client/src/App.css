@@ -19,6 +19,16 @@ flex-flow: row wrap;
 margin-left: 100px;
 }
 
+.rate_grid {
+  display: flex;
+flex-flow: row wrap;
+justify-content: space-around;
+margin:100px;
+
+
+
+}
+
 /* .color_card {
   width: 200px;
   height: 200px;
