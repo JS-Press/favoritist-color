@@ -38,9 +38,10 @@ class RatingsController < ApplicationController
     def update 
         user = User.find_by(id: session[:user_id])  
         if user
-            updated_rating = Rating.update( rate_params )
-            if updated_rating.save
-                render json: updated_rating, status: :created
+            rating = Rating.find_by(id: params[:id])
+            rating.score = params[:score]
+            if rating.save
+                render json: rating, include: :user, status: :created
             else
                 render json: { errors: updated_rating.errors.full_messages }, status: :unprocessable_entity
             end

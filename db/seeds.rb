@@ -27,6 +27,8 @@ User.all.each do |u|
         Rating.create( user_id: u.id, color_id: rand(1..145), score: rand(1..5) )
     end
 
+User.all.each do |u|
+    Rating.create( user_id: u.id, color_id: rand(1..145), score: 6 )
 end
 
 puts "🌱 Done seeding!"

@@ -16,7 +16,8 @@
 .Color_grid {
   display: flex;
 flex-flow: row wrap;
-margin-left: 100px;
+justify-content: space-around;
+margin: 100px;
 }
 
 .rate_grid {

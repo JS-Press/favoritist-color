@@ -19,6 +19,7 @@ function App() {
   const [ratingColor, setRatingColor] = useState(false)
   const [user, setUser] = useState(null)
   const [averageScores, setAverageScores] = useState([])
+  const [seeingRatings, setSeeingRatings] = useState(false)
 
 
   useEffect(() => {
@@ -29,6 +30,12 @@ function App() {
           setLoadingColors(false)
         })}
       })
+      fetch(`/users/${user.id}`).then((r) => {
+        if (r.ok) {
+          r.json().then(data => {
+            setUser(data)
+          })}
+        })
   }, [])
 
   
@@ -79,8 +86,13 @@ function handleLogout(){
 
 function onLogin(u){
   console.log('trigger login with ' + u.name)
-  setUser(u)
-  setLoggedIn(true)
+  fetch(`/users/${u.id}`).then((r) => {
+    if (r.ok) {
+      r.json().then(data => {
+        setUser(data)
+        setLoggedIn(true)
+      })}
+    })
 }
 
   return (
@@ -112,7 +124,7 @@ function onLogin(u){
         <Route path="/" element={<Home setAverageScores={setAverageScores} averageScores={averageScores} fav={fav} loggedIn={loggedIn} colors={colors} loadingColors={loadingColors} shuffle={shuffle} ratingColor={ratingColor} setRatingColor={setRatingColor} user={user}/>}/>
         <Route path="/signup" element={<Signup fav={fav} onLogin={onLogin} colors={colors} loadingColors={loadingColors} shuffle={shuffle}/>}/>
         <Route path="/login" element={<Login fav={fav} onLogin={onLogin} />}/>
-        <Route path="/users/:id" element={<UserPage u={user} fav={fav} />}/>
+        <Route path="/users/:id" element={<UserPage user={user} fav={fav} onLogin={onLogin} setUser={setUser} />}/>
       </Routes>
     </div>
   </div>
