@@ -21,18 +21,18 @@ function ColorCard({name, setRatingColor, setRcolor, loggedIn, rates, setFavColo
         textColor: `${name}`,
         height: 200,
         width:200,
-        margin: 20,
+        margin: 32,
         borderRadius: 150
     }
 
     const labelStyle = {
         position: 'relative',
-        top: -55,
+        top: -53,
         marginTop:0,
         backgroundColor:`black`,
         color: `${name}`,
         fontWeight: 'bold',
-        fontSize: 16
+        fontSize: 17
     }
 
     function handleRateClick(e){

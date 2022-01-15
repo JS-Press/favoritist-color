@@ -119,7 +119,7 @@ function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setR
   
   { ratingColor === true? <>
   
-  <div style={{borderStyle: 'solid', borderColor: `${rColor}`, borderWidth: 2, width:380, marginLeft:'auto', marginRight:'auto'}}>
+  <div style={{borderStyle: 'solid', borderColor: `${rColor}`, borderWidth: 2, width:380, marginLeft:'auto', marginRight:'auto', marginTop:35}}>
   <h1 style={{color:`${rColor}`, fontSize: 30}}>{rColor}</h1>
   <div style={rStyle}></div>
   { numberRating? <>

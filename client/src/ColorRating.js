@@ -116,7 +116,7 @@ function ColorRating({ user_id, color_id, score, ratingId, onLogin, setUser }){
 
     return (
         <>
-        <div style={{backgroundColor: 'transparent', display:'flex', flexFlow: 'column'}}>
+        <div style={{backgroundColor: 'transparent', display:'flex', flexFlow: 'column', marginBottom:30 }}>
         <div style={divStyle}>
         </div>
         { newNumberRating === null ? <h1 style={{ position: 'relative', left:0, top: 5, backgroundColor: 'transparent', fontSize: 90, color:'black'}}>{rating}</h1>
