@@ -14,14 +14,24 @@ class SessionsController < ApplicationController
     end
   end
 
+  def show
+    user = User.find_by(id: session[:user_id])
+    if user
+      render json: user, status: :created
+    else
+      render json: { error: "Not authorized" }, status: :unauthorized
+    end
+  end
+
   def destroy
-    user = User.find_by(id: session[:user_id])  
-      if user
-        session.delete :user_id
-        head :no_content
-      else 
-        render json: { errors: [ 1 , 2 ] }, status: :unauthorized
-      end
+    session.clear
+    # user = User.find_by(id: session[:user_id])  
+    #   if user
+    #     session.delete :user_id
+    #     head :no_content
+    #   else 
+    #     render json: { errors: [ 1 , 2 ] }, status: :unauthorized
+    #   end
   end
 
   private 

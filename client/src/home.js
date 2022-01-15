@@ -3,7 +3,7 @@ import crown from './crown.png'
 import ColorCard from "./ColorCard"
 import { useNavigate } from "react-router-dom";
 
-function Home({ setAverageScores, averageScores, fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setRatingColor, user }){
+function Home({ setAverageScores, averageScores, fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setRatingColor, user, setUser }){
     
     const [searchField, setSearchField] = useState('')
     const [rColor, setRcolor] = useState("")
@@ -16,6 +16,17 @@ function Home({ setAverageScores, averageScores, fav, loggedIn, colors, loadingC
     const color_cards = filteredColors.map( c => <ColorCard name={c.name} ratings={c.ratings} key={c.name} setRatingColor={setRatingColor} setRcolor={setRcolor} loggedIn={loggedIn} colorId={c.id} rates='true' setAverageScores={setAverageScores} averageScores={averageScores} /> )
 
     const navigate = useNavigate()
+
+    // useEffect(() => {
+    //   fetch(`/me`).then((r) => {
+    //     if (r.ok) {
+    //       r.json().then(data => {
+    //           console.log('set ME')
+    //           console.log(data)
+    //         setUser(data)
+    //       })}
+    //     })
+    //   }, [])
 
   const searchStyle = {
       backgroundColor: 'black',

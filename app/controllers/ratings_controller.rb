@@ -51,8 +51,9 @@ class RatingsController < ApplicationController
     end
 
 
-    def delete 
+    def destroy
         user = User.find_by(id: session[:user_id])  
+        # byebug
         if user
             Rating.destroy( params[:id] )
             head :no_content

@@ -11,15 +11,29 @@ import './App.css';
 
 function App() {
   
-  
+ 
+
   const [colors, setColors] = useState([])
   const [loadingColors, setLoadingColors] = useState(true)
   const [fav, setFav] = useState('CornflowerBlue')
   const [loggedIn, setLoggedIn] = useState(false)
-  const [ratingColor, setRatingColor] = useState(false)
   const [user, setUser] = useState(null)
+  const [ratingColor, setRatingColor] = useState(false)
   const [averageScores, setAverageScores] = useState([])
   const [seeingRatings, setSeeingRatings] = useState(false)
+  
+  console.log(user)
+  console.log(loggedIn)
+
+
+  useEffect(() => {
+  fetch(`/me`).then((r) => {
+    if (r.ok) {
+      r.json().then(data => {
+        setUser(data)
+      })}
+    })
+  }, [])
 
 
   useEffect(() => {
@@ -30,12 +44,6 @@ function App() {
           setLoadingColors(false)
         })}
       })
-      fetch(`/users/${user.id}`).then((r) => {
-        if (r.ok) {
-          r.json().then(data => {
-            setUser(data)
-          })}
-        })
   }, [])
 
   
@@ -80,8 +88,18 @@ function App() {
 
 function handleLogout(){
   console.log('logOUT')
-  setLoggedIn(false)
-  setRatingColor(false)
+
+  fetch(`/logout`, {
+            method: "DELETE"
+          }).then((r) => {
+            if (r.ok) {
+            console.log('successful logout!')
+            setUser(null)
+            setLoggedIn(false)
+            setRatingColor(false)
+          }else {
+            console.log('unsuccessful logout :(')
+        }});
 }
 
 function onLogin(u){
@@ -121,7 +139,7 @@ function onLogin(u){
       )}
       <Routes>
         {/* <Route path="" element={}/> */}
-        <Route path="/" element={<Home setAverageScores={setAverageScores} averageScores={averageScores} fav={fav} loggedIn={loggedIn} colors={colors} loadingColors={loadingColors} shuffle={shuffle} ratingColor={ratingColor} setRatingColor={setRatingColor} user={user}/>}/>
+        <Route path="/" element={<Home user={user} setUser={setUser} setAverageScores={setAverageScores} averageScores={averageScores} fav={fav} loggedIn={loggedIn} colors={colors} loadingColors={loadingColors} shuffle={shuffle} ratingColor={ratingColor} setRatingColor={setRatingColor}/>}/>
         <Route path="/signup" element={<Signup fav={fav} onLogin={onLogin} colors={colors} loadingColors={loadingColors} shuffle={shuffle}/>}/>
         <Route path="/login" element={<Login fav={fav} onLogin={onLogin} />}/>
         <Route path="/users/:id" element={<UserPage user={user} fav={fav} onLogin={onLogin} setUser={setUser} />}/>

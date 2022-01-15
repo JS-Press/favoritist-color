@@ -6,7 +6,6 @@ class ColorsController < ApplicationController
 
     def show
         color = Color.find(params[:id])
-        # byebug
           render json: color, status: :ok
       end
 

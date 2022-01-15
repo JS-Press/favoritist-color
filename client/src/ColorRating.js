@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function ColorRating({ user_id, color_id, score, ratingId, onLogin }){
+function ColorRating({ user_id, color_id, score, ratingId, onLogin, setUser }){
 
     const [color, setColor] = useState('')
     const [editing, setEditing] = useState(false)
@@ -69,6 +69,7 @@ function ColorRating({ user_id, color_id, score, ratingId, onLogin }){
 
     function handleDelete(){
         console.log('deleting ' + color.name + " rating")
+        console.log(ratingId)
         fetch(`/ratings/${ratingId}`, {
             method: "DELETE"
           }).then((r) => {
@@ -94,6 +95,14 @@ function ColorRating({ user_id, color_id, score, ratingId, onLogin }){
                 setRating(newNumberRating)
                 setEditing(false)
                 setNewNumberRating(null)
+
+                fetch(`/me`).then((r) => {
+                  if (r.ok) {
+                    r.json().then(data => {
+                      setUser(data)
+                    })}
+                  })
+
             } else {
                 console.log('unsuccessful patch :(')
             }

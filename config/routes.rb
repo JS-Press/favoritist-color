@@ -6,11 +6,12 @@ Rails.application.routes.draw do
   get '/colors', to: 'colors#index'
   get '/colors/:id', to: 'colors#show'
   post '/users', to: 'users#create'
-  get '/users/:id', to: 'users#show'
-  delete '/ratings/:id', to: 'ratings#destroy'
+  get '/me', to: 'sessions#show'
+  # get '/users/:id', to: 'users#show'
+  # delete '/ratings/:id', to: 'ratings#destroy'
 
   resources :ratings
-  resources :users, :only => [ :index, :post, :show ]
+  resources :users, :only => [ :index, :create, :show ]
   
 
 
