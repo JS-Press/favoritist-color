@@ -15,17 +15,27 @@ function App() {
 
   const [colors, setColors] = useState([])
   const [loadingColors, setLoadingColors] = useState(true)
-  const [fav, setFav] = useState('CornflowerBlue')
+  const [fav, setFav] = useState('gray')
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState(null)
   const [ratingColor, setRatingColor] = useState(false)
-  const [averageScores, setAverageScores] = useState([])
+  const [favorite, setFavorite] = useState({})
   const [seeingRatings, setSeeingRatings] = useState(false)
   
-  console.log(user)
-  console.log(loggedIn)
+  // console.log('current user: ' + user.name)
+  // console.log('loggedIn: ' +loggedIn)
 
+  useEffect(() => {
+    fetch(`/favorite`).then((r) => {
+      if (r.ok) {
+        r.json().then(data => {
+          setFavorite(data)
+          setFav(data.name)
+        })}
+      })
+    }, [])
 
+  
   useEffect(() => {
   fetch(`/me`).then((r) => {
     if (r.ok) {
@@ -58,12 +68,16 @@ function App() {
   const logoutStyle = {
     color: `${fav}`, 
     textDecoration: 'none',
+    position: 'relative',
+    top:20,
     fontWeight: 'bold',
     borderRadius: 50,
+    marginBottom:50,
     padding: 2
   }
 
   const myColorsStyle = {
+    
     backgroundColor: `${fav}`, 
     color:'black',
     textDecoration: 'none',
@@ -94,7 +108,7 @@ function handleLogout(){
           }).then((r) => {
             if (r.ok) {
             console.log('successful logout!')
-            setUser(null)
+            // setUser(null)
             setLoggedIn(false)
             setRatingColor(false)
           }else {
@@ -111,6 +125,7 @@ function onLogin(u){
         setLoggedIn(true)
       })}
     })
+    console.log('done logging in')
 }
 
   return (
@@ -124,9 +139,13 @@ function onLogin(u){
       <br></br>
       {loggedIn && (
         <>
-          <h1 style={{ fontSize: 20, marginBottom:0, color: `${fav}` }}>Hello {user.name} :)</h1>
-          <button style={logoutStyle} onClick={handleLogout} >  logout  </button>
+        <div style={{ marginBottom: 20, marginTop: -5}}>
+          <h1 style={{ fontSize: 20, marginBottom:22, marginTop:20 , color: `${fav}` }}>Hello {user.name} :)</h1>
+          {/* <button style={logoutStyle} onClick={handleLogout} >  logout  </button> */}
           <Link style={myColorsStyle} to={`/users/${user.id}`} >  see my ratings  </Link>
+          <br></br>
+          <Link style={logoutStyle} to="/" onClick={handleLogout} >  logout  </Link>
+        </div>
         </>
       )}
       {!loggedIn && (
@@ -139,10 +158,10 @@ function onLogin(u){
       )}
       <Routes>
         {/* <Route path="" element={}/> */}
-        <Route path="/" element={<Home user={user} setUser={setUser} setAverageScores={setAverageScores} averageScores={averageScores} fav={fav} loggedIn={loggedIn} colors={colors} loadingColors={loadingColors} shuffle={shuffle} ratingColor={ratingColor} setRatingColor={setRatingColor}/>}/>
+        <Route path="/" element={<Home user={user} setUser={setUser} fav={fav} loggedIn={loggedIn} colors={colors} loadingColors={loadingColors} shuffle={shuffle} ratingColor={ratingColor} setRatingColor={setRatingColor}/>}/>
         <Route path="/signup" element={<Signup fav={fav} onLogin={onLogin} colors={colors} loadingColors={loadingColors} shuffle={shuffle}/>}/>
         <Route path="/login" element={<Login fav={fav} onLogin={onLogin} />}/>
-        <Route path="/users/:id" element={<UserPage user={user} fav={fav} onLogin={onLogin} setUser={setUser} />}/>
+        <Route path="/users/:id" element={<UserPage user={user} fav={fav} onLogin={onLogin} setUser={setUser} loggedIn={loggedIn} />}/>
       </Routes>
     </div>
   </div>

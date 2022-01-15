@@ -32,5 +32,13 @@ User.all.each do |u|
     end
 end
 
+jarad = User.create( name: 'Jarad', color_id: 1, password: 'word' )
+
+Color.all.each do |c| 
+    Rating.create( user_id: jarad.id, color_id: c.id, score: rand(1..5) )
+end
+
+
+
 
 puts "🌱 Done seeding!"

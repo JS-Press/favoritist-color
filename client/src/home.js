@@ -3,7 +3,7 @@ import crown from './crown.png'
 import ColorCard from "./ColorCard"
 import { useNavigate } from "react-router-dom";
 
-function Home({ setAverageScores, averageScores, fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setRatingColor, user, setUser }){
+function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setRatingColor, user, setUser }){
     
     const [searchField, setSearchField] = useState('')
     const [rColor, setRcolor] = useState("")
@@ -13,7 +13,7 @@ function Home({ setAverageScores, averageScores, fav, loggedIn, colors, loadingC
 
     const shuffled_colors = shuffle(colors)
     const filteredColors = shuffled_colors.filter((c) => c.name.toUpperCase().includes(searchField.toUpperCase()))
-    const color_cards = filteredColors.map( c => <ColorCard name={c.name} ratings={c.ratings} key={c.name} setRatingColor={setRatingColor} setRcolor={setRcolor} loggedIn={loggedIn} colorId={c.id} rates='true' setAverageScores={setAverageScores} averageScores={averageScores} /> )
+    const color_cards = filteredColors.map( c => <ColorCard name={c.name} ratings={c.ratings} key={c.name} setRatingColor={setRatingColor} setRcolor={setRcolor} loggedIn={loggedIn} colorId={c.id} rates='true' /> )
 
     const navigate = useNavigate()
 
@@ -112,13 +112,13 @@ function Home({ setAverageScores, averageScores, fav, loggedIn, colors, loadingC
 
     return (
   <div>
+  {loadingColors === true?<><h1 style={{display:'flex', position:'relative', alignSelf:'center', color: `${fav}`}}>loading colors...thanks for your patience...</h1></> : <>
   <img className="crown" src={crown} alt="crown" />
   <div className='favColor' style={favStyle}></div>
   <h3 style={{ color: `${fav}` }}>currently, the favoritist color is <em style={{ color: `${fav}` }}>{fav}</em></h3>
   
   { ratingColor === true? <>
-  <br></br>
-  <br></br>
+  
   <div style={{borderStyle: 'solid', borderColor: `${rColor}`, borderWidth: 2, width:380, marginLeft:'auto', marginRight:'auto'}}>
   <h1 style={{color:`${rColor}`, fontSize: 30}}>{rColor}</h1>
   <div style={rStyle}></div>
@@ -147,10 +147,10 @@ function Home({ setAverageScores, averageScores, fav, loggedIn, colors, loadingC
   <input style = {searchStyle} type='text' onChange={handleChangeSearch} value={searchField} />
   <br></br>
   <label style={labelStyle}>search for a color</label>
-  <div className='Color_grid'>
-  {loadingColors === true?<><h1 style={{display:'flex', position:'relative', alignSelf:'center', color: `${fav}`}}>loading colors...thanks for your patience...</h1></> : <>
-  {color_cards}</>}
-  </div>
+
+  <div className='Color_grid' style={{ position: 'relative', top: -100, marginBottom: -65 }}>
+  {color_cards}
+  </div></>}
   <div>
   <h5 style={{ color: `${fav}` }}>A Website by Jarad Solomon</h5>
   </div>

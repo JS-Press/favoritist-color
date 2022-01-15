@@ -28,7 +28,7 @@ function ColorRating({ user_id, color_id, score, ratingId, onLogin, setUser }){
     const deleteStyle = {
         position: 'relative',
         top: 0,
-        fontSize:18,
+        fontSize:16,
         backgroundColor:`black`,
         color: `${color.name}`,
         height: 25,

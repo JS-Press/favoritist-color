@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function ColorCard({name, setRatingColor, setRcolor, loggedIn, rates, setFavColor, setFavColorId, colorId, ratings, setAverageScores, averageScores}){
+function ColorCard({name, setRatingColor, setRcolor, loggedIn, rates, setFavColor, setFavColorId, colorId, ratings }){
 
     const [isShown, setIsShown] = useState(false);
 
