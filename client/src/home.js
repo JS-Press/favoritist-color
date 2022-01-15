@@ -112,7 +112,7 @@ function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setR
 
     return (
   <div>
-  {loadingColors === true?<><h1 style={{display:'flex', position:'relative', alignSelf:'center', color: `${fav}`}}>loading colors...thanks for your patience...</h1></> : <>
+  {loadingColors === true?<><h1 style={{marginLeft:50, marginReft:50,marginBottom:100, color: `${fav}`}}>loading colors...thanks for your patience...</h1></> : <>
   <img className="crown" src={crown} alt="crown" />
   <div className='favColor' style={favStyle}></div>
   <h3 style={{ color: `${fav}` }}>currently, the favoritist color is <em style={{ color: `${fav}` }}>{fav}</em></h3>

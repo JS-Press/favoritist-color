@@ -17,13 +17,13 @@ function App() {
   const [loadingColors, setLoadingColors] = useState(true)
   const [fav, setFav] = useState('gray')
   const [loggedIn, setLoggedIn] = useState(false)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState({})
   const [ratingColor, setRatingColor] = useState(false)
   const [favorite, setFavorite] = useState({})
   const [seeingRatings, setSeeingRatings] = useState(false)
   
-  // console.log('current user: ' + user.name)
-  // console.log('loggedIn: ' +loggedIn)
+  console.log('current user: ' + user.name)
+  console.log('loggedIn: ' +loggedIn)
 
   useEffect(() => {
     fetch(`/favorite`).then((r) => {

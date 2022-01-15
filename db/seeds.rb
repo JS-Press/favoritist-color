@@ -21,18 +21,17 @@ end
 rand(10..20).times do 
     color = rand(1..145)
     u = User.create( name: names.sample, color_id: color, password: passwords.sample )
-    Rating.create( user_id: u.id, color_id: color, score: 6 )
-
+    Rating.create( user_id: u.id, color_id: color, score: 5 )
 end
 
 
 User.all.each do |u|
-    rand(5..50).times do 
+    rand(2..10).times do 
         Rating.create( user_id: u.id, color_id: rand(1..145), score: rand(1..5) )
     end
 end
 
-jarad = User.create( name: 'Jarad', color_id: 1, password: 'word' )
+jarad = User.create( name: 'Jarad', color_id: 100, password: 'word' )
 
 Color.all.each do |c| 
     Rating.create( user_id: jarad.id, color_id: c.id, score: rand(1..5) )

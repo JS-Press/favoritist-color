@@ -91,18 +91,10 @@ function ColorRating({ user_id, color_id, score, ratingId, onLogin, setUser }){
           }).then((r) => {
             if (r.ok) {r.json().then((rate) => {
                 // console.log(rate)
-                })
-                setRating(newNumberRating)
+                // setRating(newNumberRating)
                 setEditing(false)
                 setNewNumberRating(null)
-
-                fetch(`/me`).then((r) => {
-                  if (r.ok) {
-                    r.json().then(data => {
-                      setUser(data)
-                    })}
-                  })
-
+                })
             } else {
                 console.log('unsuccessful patch :(')
             }

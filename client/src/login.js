@@ -49,6 +49,10 @@ function Login({ fav, onLogin }){
     setPassword(e.target.value)
     }
 
+    function handleBack(){
+      navigate('/')
+    }
+
       function handleSubmit(){
         console.log('trying to log in ' + name)
 
@@ -62,7 +66,7 @@ function Login({ fav, onLogin }){
             navigate('/')
           } else {
             r.json().then((err) => setErrors(err.errors));
-            console.log(errors)
+            console.log('login errors:' + errors)
           }
         });
         setName('')
@@ -72,6 +76,7 @@ function Login({ fav, onLogin }){
     return (
         <>
         <br></br>
+        <button onClick={handleBack} style={{ width: 75, height: 42, backgroundColor: `${fav}`, borderColor: `${fav}`, borderRadius:50, color: 'black', position: 'relative', top: -60, left: -50}} >BACK</button>
         <br></br>
         {/* <h3 style={{ color:`${fav}`, fontSize: 25 }}>login</h3> */}
         <hr style={{ width: 100, borderColor: `${fav}`}}></hr>
