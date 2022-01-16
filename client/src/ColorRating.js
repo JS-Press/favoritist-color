@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
+import { useNavigate } from "react-router-dom";
 
-function ColorRating({ user_id, color_id, score, ratingId, onLogin, setUser }){
+
+function ColorRating({ color_id, score, ratingId, eraseRating, user_id, onLogin }){
 
     const [color, setColor] = useState('')
     const [editing, setEditing] = useState(false)
     const [newNumberRating, setNewNumberRating] = useState(null)
     const [rating, setRating] = useState(score)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch(`/colors/${color_id}`).then((r) => {
@@ -17,44 +21,16 @@ function ColorRating({ user_id, color_id, score, ratingId, onLogin, setUser }){
       }, [])
 
     const divStyle = {
-        backgroundColor:`${color.name}`,
-        height: 200,
-        width:200,
-        margin: 40,
-        marginBottom: -220,
-        borderRadius: 150
+        backgroundColor:`${color.name}`, height: 200, width:200, margin: 40, marginBottom: -220, borderRadius: 150
     }
-
     const deleteStyle = {
-        position: 'relative',
-        top: 0,
-        fontSize:16,
-        backgroundColor:`black`,
-        color: `${color.name}`,
-        height: 25,
-        width: 65,
-        borderRadius: 150,
-        marginRight: -100,
+        position: 'relative', top: 0, fontSize:16, backgroundColor:`black`, color: `${color.name}`, height: 25, width: 65, borderRadius: 150, marginRight: -100,
     }
-
     const editStyle = {
-        fontSize:16,
-        color:`black`,
-        backgroundColor:`${color.name}`,
-        height: 25,
-        width:65,
-        borderRadius: 150,
+        fontSize:16, color:`black`, backgroundColor:`${color.name}`, height: 25, width:65, borderRadius: 150,
     }
-
     const numberStyle ={
-        color:`${color.name}`,
-        fontSize: 18,
-        fontWeight: 'bold',
-        borderRadius: 50,
-        padding: 0,
-        width: 28,
-        height: 28,
-        margin: 5
+        color:`${color.name}`, fontSize: 18, fontWeight: 'bold', borderRadius: 50, padding: 0, width: 28, height: 28, margin: 5
       }
 
     function handleEditing(){
@@ -75,6 +51,9 @@ function ColorRating({ user_id, color_id, score, ratingId, onLogin, setUser }){
           }).then((r) => {
             if (r.ok) {
             console.log('successful delete!')
+            // setColor('black')
+            // navigate(`/`)
+            eraseRating(ratingId)
           }else {
             console.log('unsuccessful delete :(')
         }});
@@ -91,7 +70,7 @@ function ColorRating({ user_id, color_id, score, ratingId, onLogin, setUser }){
           }).then((r) => {
             if (r.ok) {r.json().then((rate) => {
                 // console.log(rate)
-                // setRating(newNumberRating)
+                setRating(newNumberRating)
                 setEditing(false)
                 setNewNumberRating(null)
                 })

@@ -3,7 +3,11 @@ import crown from './crown.png'
 import ColorCard from "./ColorCard"
 import { useNavigate } from "react-router-dom";
 
-function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setRatingColor, user, setUser }){
+function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setRatingColor, user, onLogin }){
+
+  useEffect(() => {
+    onLogin(user)
+    },[])
     
     const [searchField, setSearchField] = useState('')
     const [rColor, setRcolor] = useState("")
@@ -29,51 +33,24 @@ function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setR
     //   }, [])
 
   const searchStyle = {
-      backgroundColor: 'black',
-      color: `${fav}`,
-      borderColor: `${fav}`,
-      borderRadius: 40,
-      padding: 8
+      backgroundColor: 'black', color: `${fav}`, borderColor: `${fav}`, borderRadius: 40, padding: 8
     }
 
   const labelStyle = {
-      display: 'flex',
-      alignItems: 'center',
-      backgroundColor: 'black',
-      color: `${fav}`,
+      display: 'flex', alignItems: 'center', backgroundColor: 'black', color: `${fav}`,
     }
 
   const rStyle = {
-    backgroundColor:`${rColor}`,
-      height: 200,
-      width:200,
-      margin: 20,
-      display: 'block',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      borderRadius: 150
+    backgroundColor:`${rColor}`, height: 200, width:200, margin: 20, display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: 150
   }
 
   const numberStyle ={
-    color:`${rColor}`,
-    fontSize: 25,
-    fontWeight: 'bold',
-    borderRadius: 50,
-    padding: 5,
-    width: 40
+    color:`${rColor}`, fontSize: 25, fontWeight: 'bold', borderRadius: 50, padding: 5, width: 40
   }
   
   const favStyle = {
-      backgroundColor:`${fav}`,
-      height: 200,
-      width:200,
-      margin: 20,
-      display: 'block',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      borderRadius: 150
+      backgroundColor:`${fav}`, height: 200, width:200, margin: 20, display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: 150
     }
-
 
     function handleChangeSearch(e){
         setSearchField(e.target.value)

@@ -10,8 +10,6 @@ import './App.css';
 
 
 function App() {
-  
- 
 
   const [colors, setColors] = useState([])
   const [loadingColors, setLoadingColors] = useState(true)
@@ -24,6 +22,7 @@ function App() {
   
   console.log('current user: ' + user.name)
   console.log('loggedIn: ' +loggedIn)
+  console.log(user)
 
   useEffect(() => {
     fetch(`/favorite`).then((r) => {
@@ -35,16 +34,15 @@ function App() {
       })
     }, [])
 
-  
   useEffect(() => {
   fetch(`/me`).then((r) => {
     if (r.ok) {
       r.json().then(data => {
         setUser(data)
+        setLoggedIn(true)
       })}
     })
   }, [])
-
 
   useEffect(() => {
     fetch('/colors').then((r) => {
@@ -56,38 +54,15 @@ function App() {
       })
   }, [])
 
-  
   const titleStyle = {
-    color: `${fav}`, 
-    textDecoration: 'none',
-    fontWeight: 'bold',
-    fontSize: 50,
-    margin: 40
+    color: `${fav}`,  textDecoration: 'none', fontWeight: 'bold', fontSize: 50, margin: 40
   }
-  
   const logoutStyle = {
-    color: `${fav}`, 
-    textDecoration: 'none',
-    position: 'relative',
-    top:20,
-    fontWeight: 'bold',
-    borderRadius: 50,
-    marginBottom:50,
-    padding: 2
+    color: `${fav}`,  textDecoration: 'none', position: 'relative', top:20, fontWeight: 'bold', borderRadius: 50, marginBottom:50, padding: 2
   }
-
   const myColorsStyle = {
-    
-    backgroundColor: `${fav}`, 
-    color:'black',
-    textDecoration: 'none',
-    fontWeight: 'bold',
-    borderRadius: 50,
-    marginBottom:10,
-    marginTop:20,
-    padding: 6
+    backgroundColor: `${fav}`, color:'black', textDecoration: 'none', fontWeight: 'bold', borderRadius: 50, marginBottom:10, marginTop:20, padding: 6
   }
-
 
   function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
@@ -108,7 +83,7 @@ function handleLogout(){
           }).then((r) => {
             if (r.ok) {
             console.log('successful logout!')
-            // setUser(null)
+            setUser({})
             setLoggedIn(false)
             setRatingColor(false)
           }else {
@@ -158,10 +133,10 @@ function onLogin(u){
       )}
       <Routes>
         {/* <Route path="" element={}/> */}
-        <Route path="/" element={<Home user={user} setUser={setUser} fav={fav} loggedIn={loggedIn} colors={colors} loadingColors={loadingColors} shuffle={shuffle} ratingColor={ratingColor} setRatingColor={setRatingColor}/>}/>
+        <Route path="/" element={<Home user={user} fav={fav} onLogin={onLogin} loggedIn={loggedIn} colors={colors} loadingColors={loadingColors} shuffle={shuffle} ratingColor={ratingColor} setRatingColor={setRatingColor}/>}/>
         <Route path="/signup" element={<Signup fav={fav} onLogin={onLogin} colors={colors} loadingColors={loadingColors} shuffle={shuffle}/>}/>
         <Route path="/login" element={<Login fav={fav} onLogin={onLogin} />}/>
-        <Route path="/users/:id" element={<UserPage user={user} fav={fav} onLogin={onLogin} setUser={setUser} loggedIn={loggedIn} />}/>
+        <Route path="/users/:id" element={<UserPage user={user} fav={fav} onLogin={onLogin} loggedIn={loggedIn} />}/>
       </Routes>
     </div>
   </div>

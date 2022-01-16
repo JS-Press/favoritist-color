@@ -1,36 +1,42 @@
 import ColorRating from "./ColorRating"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
-function UserPage({user, setUser, fav, onLogin, loggedIn}){
+function UserPage({user, fav, onLogin, loggedIn}){
 
-    const navigate = useNavigate()
+    useEffect(() => {
+    onLogin(user)
+    },[])
 
     // useEffect(() => {
     //     fetch(`/me`).then((r) => {
     //       if (r.ok) {
     //         r.json().then(data => {
-    //             console.log('set ME')
-    //             console.log(data)
     //           setUser(data)
+    //           setLoggedIn(true)
     //         })}
     //       })
     //     }, [])
 
-//   console.log(u)
+    const navigate = useNavigate()
+
+    const [myRatings, setMyRatings] = useState(user.ratings)
+
+    function eraseRating(r){
+        const newRatings = myRatings.filter(rate => rate.id !== r )
+        setMyRatings(newRatings)
+    }
+
 //   console.log(user.ratings)
+
+console.log(user)
 
 function handleBack(){
     navigate('/')
   }
 
-
-
-if(user){
+  const userColors = myRatings.map(r => <ColorRating color_id={r.color_id} user_id={r.user_id} score={r.score} key={r.id} ratingId={r.id} onLogin={onLogin} eraseRating={eraseRating} />)
   
-  const userColors = user.ratings.map(r => <ColorRating setUser={setUser} color_id={r.color_id} user_id={r.user_id} score={r.score} key={r.id} ratingId={r.id} onLogin={onLogin} />)
-  
-
 
     return (
         <>
@@ -41,13 +47,8 @@ if(user){
             </div>
         </>
     );
-} else{
-    return (
-        <>
-            <h1 style={{color:`${fav}`, fontSize:70, marginBottom:-50}}>Loading color ratings...</h1>
-        </>
-    );
-}
+
+
 }
 
 export default UserPage;
