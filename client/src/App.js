@@ -17,8 +17,6 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState({})
   const [ratingColor, setRatingColor] = useState(false)
-  const [favorite, setFavorite] = useState({})
-  const [seeingRatings, setSeeingRatings] = useState(false)
   
   console.log('current user: ' + user.name)
   console.log('loggedIn: ' +loggedIn)
@@ -28,7 +26,6 @@ function App() {
     fetch(`/favorite`).then((r) => {
       if (r.ok) {
         r.json().then(data => {
-          setFavorite(data)
           setFav(data.name)
         })}
       })
@@ -64,20 +61,19 @@ function App() {
     backgroundColor: `${fav}`, color:'black', textDecoration: 'none', fontWeight: 'bold', borderRadius: 50, marginBottom:10, marginTop:20, padding: 6
   }
 
-  function shuffle(array) {
-    let currentIndex = array.length,  randomIndex;
-    while (currentIndex != 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
-    }
-    return array;
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
   }
+  return array;
+}
 
 function handleLogout(){
   console.log('logOUT')
-
   fetch(`/logout`, {
             method: "DELETE"
           }).then((r) => {

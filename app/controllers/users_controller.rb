@@ -10,7 +10,7 @@ def create
     user = User.new(user_params)
     if user.save
       session[:user_id] = user.id
-      Rating.create(user_id: user.id, color_id: user.color_id, score: 6)
+      Rating.create(user_id: user.id, color_id: user.color_id, score: 5)
       render json: user, status: :created
       else
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity

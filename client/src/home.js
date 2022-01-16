@@ -9,83 +9,67 @@ function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setR
     onLogin(user)
     },[])
     
+    const navigate = useNavigate()
     const [searchField, setSearchField] = useState('')
     const [rColor, setRcolor] = useState("")
     const [numberRating, setNumberRating] = useState(null)
     const [errors, setErrors] = useState([]);
 
-
     const shuffled_colors = shuffle(colors)
     const filteredColors = shuffled_colors.filter((c) => c.name.toUpperCase().includes(searchField.toUpperCase()))
     const color_cards = filteredColors.map( c => <ColorCard name={c.name} ratings={c.ratings} key={c.name} setRatingColor={setRatingColor} setRcolor={setRcolor} loggedIn={loggedIn} colorId={c.id} rates='true' /> )
 
-    const navigate = useNavigate()
-
-    // useEffect(() => {
-    //   fetch(`/me`).then((r) => {
-    //     if (r.ok) {
-    //       r.json().then(data => {
-    //           console.log('set ME')
-    //           console.log(data)
-    //         setUser(data)
-    //       })}
-    //     })
-    //   }, [])
-
   const searchStyle = {
       backgroundColor: 'black', color: `${fav}`, borderColor: `${fav}`, borderRadius: 40, padding: 8
     }
-
   const labelStyle = {
       display: 'flex', alignItems: 'center', backgroundColor: 'black', color: `${fav}`,
     }
-
   const rStyle = {
     backgroundColor:`${rColor}`, height: 200, width:200, margin: 20, display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: 150
   }
-
   const numberStyle ={
     color:`${rColor}`, fontSize: 25, fontWeight: 'bold', borderRadius: 50, padding: 5, width: 40
   }
-  
   const favStyle = {
       backgroundColor:`${fav}`, height: 200, width:200, margin: 20, display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: 150
     }
 
-    function handleChangeSearch(e){
-        setSearchField(e.target.value)
+function handleChangeSearch(e){
+    setSearchField(e.target.value)
+  }
+
+function handleBack(){
+  setRatingColor(false)
+  setNumberRating(null)
+}
+
+function handleRateClick(e){
+setNumberRating(e.target.value)
+}
+
+function handleRatingSubmit(){
+    setErrors([]);
+    fetch("/ratings", {
+      method: "POST",
+      headers: {"Content-Type": "application/json",},
+      body: JSON.stringify({
+        user_id: user.id,
+        color: rColor,
+        score: numberRating
+      }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          navigate('/')
+          console.log(r)
+          setNumberRating(null)
+          setRatingColor(false)});
+      } else {
+        r.json().then((err) => setErrors(err.errors));
       }
-
-    function handleBack(){
-      setRatingColor(false)
-      setNumberRating(null)
-    }
-
-    function handleRateClick(e){
-    setNumberRating(e.target.value)
-    }
-
-    function handleRatingSubmit(){
-        setErrors([]);
-        fetch("/ratings", {
-          method: "POST",
-          headers: {"Content-Type": "application/json",},
-          body: JSON.stringify({
-            user_id: user.id,
-            color: rColor,
-            score: numberRating
-          }),
-        }).then((r) => {
-          if (r.ok) {
-            r.json().then((user) => {
-              navigate('/')
-              setRatingColor(false)});
-          } else {
-            r.json().then((err) => setErrors(err.errors));
-          }
-        });
-    }
-
+    });
+}
 
     return (
   <div>

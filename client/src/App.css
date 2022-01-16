@@ -18,16 +18,15 @@
 flex-flow: row wrap;
 justify-content: space-around;
 margin: 100px;
+position: relative;
+top: -65px;
 }
 
 .rate_grid {
-  display: flex;
+display: flex;
 flex-flow: row wrap;
 justify-content: space-around;
 margin:100px;
-
-
-
 }
 
 /* .color_card {

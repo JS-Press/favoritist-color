@@ -4,12 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 function ColorRating({ color_id, score, ratingId, eraseRating, user_id, onLogin }){
 
+    const navigate = useNavigate()
     const [color, setColor] = useState('')
     const [editing, setEditing] = useState(false)
     const [newNumberRating, setNewNumberRating] = useState(null)
     const [rating, setRating] = useState(score)
-
-    const navigate = useNavigate()
 
     useEffect(() => {
         fetch(`/colors/${color_id}`).then((r) => {

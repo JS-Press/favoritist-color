@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 function UserPage({user, fav, onLogin, loggedIn}){
 
+    const navigate = useNavigate()
+    const [myRatings, setMyRatings] = useState(user.ratings)
+
+    // const [logged, setLogged] = useState(loggedIn)
+
     useEffect(() => {
     onLogin(user)
     },[])
@@ -17,25 +22,31 @@ function UserPage({user, fav, onLogin, loggedIn}){
     //         })}
     //       })
     //     }, [])
+    console.log(user)
+    console.log(loggedIn)
 
-    const navigate = useNavigate()
+    if(loggedIn === true){
 
-    const [myRatings, setMyRatings] = useState(user.ratings)
 
     function eraseRating(r){
-        const newRatings = myRatings.filter(rate => rate.id !== r )
-        setMyRatings(newRatings)
+        // const newRatings = myRatings.filter(rate => rate.id !== r )
+        // setMyRatings(r)
+        console.log('trying to delete : ' + r)
+        onLogin(user)
     }
 
 //   console.log(user.ratings)
 
-console.log(user)
 
 function handleBack(){
     navigate('/')
   }
-
-  const userColors = myRatings.map(r => <ColorRating color_id={r.color_id} user_id={r.user_id} score={r.score} key={r.id} ratingId={r.id} onLogin={onLogin} eraseRating={eraseRating} />)
+  console.log('mapping:')
+  console.log(user)
+  console.log(myRatings)
+  console.log(user.ratings)
+  console.log(':mapping')
+  const userColors = user.ratings.map(r => <ColorRating color_id={r.color_id} user_id={r.user_id} score={r.score} key={r.id} ratingId={r.id} onLogin={onLogin} eraseRating={eraseRating} />)
   
 
     return (
@@ -47,8 +58,14 @@ function handleBack(){
             </div>
         </>
     );
-
-
+  
+    } else {
+        return (
+            <>
+            <h1>loading...</h1>
+            </>
+        )
+    }
 }
 
 export default UserPage;

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get '/favorite', to: 'colors#favorite'
+  get '/average/:id', to: 'colors#average'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   get '/colors', to: 'colors#index'
