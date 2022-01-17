@@ -11,6 +11,7 @@ class ColorsController < ApplicationController
 
     def favorite
         colors = Color.all
+        # shuffle colors before averaging?
         averages = colors.map { |color| 
            { name: color.name, average: color.ratings.map { |rating| rating.score }.inject(0.0) { |sum, el| sum + el } / color.ratings.size }
         }

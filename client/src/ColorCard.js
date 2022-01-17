@@ -9,7 +9,7 @@ function ColorCard({name, setRatingColor, setRcolor, loggedIn, rates, setFavColo
         backgroundColor:`${name}`, textColor: `${name}`, height: 200, width:200, margin: 32, borderRadius: 150
     }
     const labelStyle = {
-        position: 'relative', top: -53, marginTop:0, backgroundColor:`black`, color: `${name}`, fontWeight: 'bold', fontSize: 17
+        position: 'relative', top: -53, marginTop:0, backgroundColor:`black`, color: `${name}`, fontWeight: 'bold', fontSize: 20
     }
   
     useEffect(() => {
@@ -38,7 +38,7 @@ function ColorCard({name, setRatingColor, setRcolor, loggedIn, rates, setFavColo
 
 return (
 <>
-<div style={divStyle} onClick={handleColorClick}>
+<div style={divStyle} onClick={handleColorClick} onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)} >
 <h4 style={{color:`black`, padding:10, backgroundColor:`${name}`, borderRadius: 150 }}>{name}</h4>
 {rates === 'true'? <> 
 <h6 onClick={handleRateClick} onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)} style={{color:`${name}`, backgroundColor:`black`, marginTop:104, fontSize: 15 }}>~ {Math.round(avgScore)}/5 average</h6>

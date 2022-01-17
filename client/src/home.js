@@ -23,7 +23,7 @@ function Home({ fav, loggedIn, colors, loadingColors, shuffle, ratingColor, setR
       backgroundColor: 'black', color: `${fav}`, borderColor: `${fav}`, borderRadius: 40, padding: 8
     }
   const labelStyle = {
-      display: 'flex', alignItems: 'center', backgroundColor: 'black', color: `${fav}`,
+      display: 'flex', alignItems: 'center', backgroundColor: 'black', color: `${fav}`, 
     }
   const rStyle = {
     backgroundColor:`${rColor}`, height: 200, width:200, margin: 20, display: 'block', marginLeft: 'auto', marginRight: 'auto', borderRadius: 150
